@@ -108,6 +108,162 @@ let charArray: string[] = ["a", "b", "c", "d", "e"];
 let boolArray: boolean[] = [true, false, true, false];
 charArray.forEach(val => val.length);
 
-// Tuple in TS ::
+// Tuple in TS ::Array with fixed size and fixed types for each index , mostly used for strict positional data of data types    
 
-let arr:
+let arr : [ number , string , boolean ] = [ 1, "Hello", true ];
+
+let coordinate: [ number , number , number ] = [ 10, 20, 30 ]; // x y z axis
+
+/* If we are sending some data in some params : 
+   localhost:4200?id=1&name=shantanu&phone=1234567890
+
+   then we can use tuple to represent the data 
+   in the function params as :     
+*/
+
+let userData: [ number , string , number ] = [ 1, "shantanu", 1234567890 ];
+
+let response: [ number , string ] = [ 200 , "OK" ]  // status code , status message
+response.push(0);
+console.log(response)
+
+// Enums in TS :: set of named constant can be defined using enum
+
+enum Color { 
+    Red = 1,
+    Green = 2,
+    Blue = 3
+}
+console.log(Color.Green)
+
+enum Direction { 
+     Up = "UP",
+     Down = "DOWN",
+     Left = "LEFT",
+     Right = "RIGHT"
+}
+console.log(Direction.Left + " DIRECTION")
+
+let dir: Direction = Direction.Up;
+console.log("DIRECTION IS : " + dir)
+
+
+// Unknown Type in TS :: Not sure 
+
+let notSure: unknown = 4;
+
+
+// Never Type in TS :: Function that never returns a value OR They always throw error 
+
+function infiniteLoop(): never { 
+    while(true) { 
+        console.log("Infinite Loop")
+    }
+}
+
+// infiniteLoop();
+
+function throwError(message: string) : never { 
+     throw new Error(message);
+}
+
+// throwError("This is a custom error message");
+
+
+// Void Type in TS :: Function that does not return any value
+
+function logMessage(message: string) : void { 
+     console.log(message);
+}  // action performed but no value returned
+
+
+// Type Inference in TS :: 
+
+let username = 1; // inferred as number 
+// username = "shantanu" // Error : Type 'string' is not assignable to type 'number'
+
+
+// Type Assertion in TS ::
+
+let some : any = " This is a string ";
+let len : number = ( some as string ).length; 
+console.log( len );
+
+
+// Union Types in TS ::
+
+let id: number | string | boolean;
+id = 123;
+id = "ABC123";
+id = true;     
+console.log("ID is : " + id);
+  
+// TYPE NARROW in TS ::
+
+function printIdfn(id: number | string) { 
+    if ( typeof id === "string" ) { 
+        console.log("ID in uppercase is : " + id.toUpperCase());
+    } else { 
+        console.log("ID is : " + id);
+    }
+}
+
+printIdfn(123);
+printIdfn("abc");
+
+
+// Interface s in TS :: structuring the shape of an obj to determine whether what all kinds of properties those objects can actually have . . . enforces typsafety on objects
+
+interface Person {
+     name: string;
+     age: number;
+     greet(): void;
+}
+
+let person: Person = { 
+     name: "Shantanu",
+     age: 21,
+     greet() { 
+         console.log("Hello, my name is " + this.name + " and I am " + this.age + " years old.");
+     }
+}
+
+person.greet();
+
+
+
+
+// Interface with Function Type in TS ::
+
+interface MathOperation {
+     (a: number, b: number): number;
+}
+
+const add : MathOperation = (a: number, b: number): number => { 
+     return a + b;
+}
+
+const multiply : MathOperation = (a: number, b: number): number => { 
+     return a * b;
+}
+console.log("Addition : " + add(5, 10));
+console.log("Multiplication : " + multiply(5, 10));
+
+
+// An interface can extend another interface in TS ::
+
+interface Employee extends Person {
+     employeeId: number;
+     department: string;
+}
+
+// type alias in TS :: giving a meaninful name indeed to a particular type or a union of types
+
+type ID = number | string;
+
+let userId: ID; // userId can be number or string
+userId = 101;
+console.log("User ID is : " + userId);
+userId = "USER101";
+console.log("User ID is : " + userId);
+
